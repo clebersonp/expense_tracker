@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expense_tracker/models/expense.dart';
 import 'package:flutter_expense_tracker/widgets/expenses_list/expenses_list.dart';
+import 'package:flutter_expense_tracker/widgets/new_expense.dart';
 
 class Expenses extends StatefulWidget {
   const Expenses({
@@ -37,7 +38,7 @@ class _ExpensesState extends State<Expenses> {
     // so, the two context are different
     showModalBottomSheet(
       context: context,
-      builder: (ctx) => const Text('Modal Bottom Sheet'),
+      builder: (ctx) => const NewExpense(),
     );
   }
 
