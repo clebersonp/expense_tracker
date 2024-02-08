@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_expense_tracker/models/expense.dart';
 
 class NewExpense extends StatefulWidget {
   const NewExpense({super.key});
@@ -13,6 +14,8 @@ class _NewExpenseState extends State<NewExpense> {
 
   final _amountController = TextEditingController();
 
+  DateTime? _selectedDate;
+
   // when using textEditingController, need to dispose it to clear the value
   // when the widget will be dispose or not showed
   @override
@@ -22,16 +25,20 @@ class _NewExpenseState extends State<NewExpense> {
     super.dispose();
   }
 
-  void _presentDatePicker() {
+  void _presentDatePicker() async {
     var now = DateTime.now();
     var initialDate = DateTime(now.year - 1);
     var lastDate = DateTime(now.year + 1);
-    showDatePicker(
+    var pickedDate = await showDatePicker(
       context: context,
       initialDate: now,
       firstDate: initialDate,
       lastDate: lastDate,
     );
+
+    // this code will executed when pickedDate has any value after await
+    // function and update the widget to show up the selected date
+    setState(() => _selectedDate = pickedDate);
   }
 
   @override
@@ -67,7 +74,15 @@ class _NewExpenseState extends State<NewExpense> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text('Selected Date'),
+                    Column(
+                      children: [
+                        Text(
+                          _selectedDate == null
+                              ? 'No date selected'
+                              : formatter.format(_selectedDate!),
+                        ),
+                      ],
+                    ),
                     IconButton(
                       onPressed: _presentDatePicker,
                       icon: const Icon(Icons.calendar_month_rounded),
@@ -89,6 +104,7 @@ class _NewExpenseState extends State<NewExpense> {
                 onPressed: () {
                   print(_titleController.text);
                   print(_amountController.text);
+                  print(_selectedDate);
                 },
                 child: const Text('Save Expense'),
               ),
