@@ -8,10 +8,15 @@ class NewExpense extends StatefulWidget {
 }
 
 class _NewExpenseState extends State<NewExpense> {
-  var _enteredTitle = '';
+  // another approach to manage the user input
+  final _titleController = TextEditingController();
 
-  void _saveTitleInput(String inputValue) {
-    _enteredTitle = inputValue;
+  // when using textEditingController, need to dispose it to clear the value
+  // when the widget will be dispose or not showed
+  @override
+  void dispose() {
+    _titleController.dispose();
+    super.dispose();
   }
 
   @override
@@ -21,9 +26,9 @@ class _NewExpenseState extends State<NewExpense> {
       child: Column(
         children: [
           TextField(
+            controller: _titleController,
             maxLength: 50,
             keyboardType: TextInputType.text,
-            onChanged: _saveTitleInput,
             decoration: const InputDecoration(
               label: Text('Title'),
             ),
@@ -31,7 +36,7 @@ class _NewExpenseState extends State<NewExpense> {
           Row(
             children: [
               ElevatedButton(
-                onPressed: () => print(_enteredTitle),
+                onPressed: () => print(_titleController.text),
                 child: const Text('Save Expense'),
               ),
             ],
