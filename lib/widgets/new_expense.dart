@@ -11,11 +11,14 @@ class _NewExpenseState extends State<NewExpense> {
   // another approach to manage the user input
   final _titleController = TextEditingController();
 
+  final _amountController = TextEditingController();
+
   // when using textEditingController, need to dispose it to clear the value
   // when the widget will be dispose or not showed
   @override
   void dispose() {
     _titleController.dispose();
+    _amountController.dispose();
     super.dispose();
   }
 
@@ -33,10 +36,26 @@ class _NewExpenseState extends State<NewExpense> {
               label: Text('Title'),
             ),
           ),
+          const SizedBox(height: 30),
+          TextField(
+            controller: _amountController,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              prefixText: '\$ ',
+              label: Text('Amount'),
+            ),
+          ),
+          const SizedBox(height: 30),
           Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              ElevatedButton(onPressed: () {}, child: const Text('Cancel')),
+              const SizedBox(width: 20),
               ElevatedButton(
-                onPressed: () => print(_titleController.text),
+                onPressed: () {
+                  print(_titleController.text);
+                  print(_amountController.text);
+                },
                 child: const Text('Save Expense'),
               ),
             ],
