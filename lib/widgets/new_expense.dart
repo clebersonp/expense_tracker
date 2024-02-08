@@ -49,7 +49,9 @@ class _NewExpenseState extends State<NewExpense> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              ElevatedButton(onPressed: () {}, child: const Text('Cancel')),
+              ElevatedButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Cancel')),
               const SizedBox(width: 20),
               ElevatedButton(
                 onPressed: () {
