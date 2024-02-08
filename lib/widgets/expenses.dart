@@ -30,6 +30,17 @@ class _ExpensesState extends State<Expenses> {
     ),
   ];
 
+  void _openAddExpenseOverlay() {
+    // first context is a generic context with metadata information for this
+    // state widget like other widgets position etc....
+    // second context(ctx) is the context of the own modal bottom sheet
+    // so, the two context are different
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) => const Text('Modal Bottom Sheet'),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +48,7 @@ class _ExpensesState extends State<Expenses> {
         title: Text(widget.title),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: _openAddExpenseOverlay,
             icon: const Icon(Icons.add),
           )
         ],
