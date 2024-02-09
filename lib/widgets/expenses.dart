@@ -22,6 +22,11 @@ class _ExpensesState extends State<Expenses> {
     setState(() => _registeredExpenses.add(expense));
   }
 
+  void _removeExpense(Expense expense) {
+    print('Removing expense: $expense');
+    setState(() => _registeredExpenses.remove(expense));
+  }
+
   void _openAddExpenseOverlay() {
     // first context is a generic context with metadata information for this
     // state widget like other widgets position etc....
@@ -52,7 +57,10 @@ class _ExpensesState extends State<Expenses> {
           // expanded to fix the problem of a list(listview) inside another
           // list(column)
           Expanded(
-            child: ExpensesList(expenses: _registeredExpenses),
+            child: ExpensesList(
+              onRemovedExpense: _removeExpense,
+              expenses: _registeredExpenses,
+            ),
           ),
         ],
       ),
