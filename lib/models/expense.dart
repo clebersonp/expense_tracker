@@ -36,4 +36,9 @@ class Expense {
   IconData? get categoryIconData {
     return _categoryIcons[category];
   }
+
+  @override
+  String toString() {
+    return 'Expense{id: $id, title: $title, amount: $amount, date: $date, category: $category}';
+  }
 }
