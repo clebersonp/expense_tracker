@@ -31,6 +31,7 @@ class _ExpensesState extends State<Expenses> {
     // show new snackbar with undo action
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        padding: const EdgeInsets.all(12),
         duration: const Duration(seconds: 3),
         content: const Text('Removed Expense!'),
         action: SnackBarAction(
