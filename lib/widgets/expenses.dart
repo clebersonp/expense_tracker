@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expense_tracker/models/expense.dart';
+import 'package:flutter_expense_tracker/widgets/chart/chart.dart';
 import 'package:flutter_expense_tracker/widgets/expenses_list/expenses_list.dart';
 import 'package:flutter_expense_tracker/widgets/new_expense.dart';
 
@@ -16,20 +17,7 @@ class Expenses extends StatefulWidget {
 }
 
 class _ExpensesState extends State<Expenses> {
-  final List<Expense> _registeredExpenses = [
-    Expense(
-      title: 'Escolha Melissa',
-      amount: 1800,
-      date: DateTime.now(),
-      category: Category.study,
-    ),
-    Expense(
-      title: 'Vivo',
-      amount: 195.92,
-      date: DateTime.now(),
-      category: Category.work,
-    ),
-  ];
+  final List<Expense> _registeredExpenses = [];
 
   void _addExpense(Expense expense) {
     setState(() => _registeredExpenses.add(expense));
@@ -73,6 +61,7 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    Widget chartContent = const Text('');
     Widget mainContent = const Center(
       child: Text('No expenses found. Start adding some!'),
     );
@@ -81,6 +70,7 @@ class _ExpensesState extends State<Expenses> {
         onRemovedExpense: _removeExpense,
         expenses: _registeredExpenses,
       );
+      chartContent = Chart(expenses: _registeredExpenses);
     }
 
     return Scaffold(
@@ -95,7 +85,7 @@ class _ExpensesState extends State<Expenses> {
       ),
       body: Column(
         children: [
-          const Text('Chart is here!'),
+          chartContent,
           // expanded to fix the problem of a list(listview) inside another
           // list(column)
           Expanded(
