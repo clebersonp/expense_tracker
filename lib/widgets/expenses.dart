@@ -41,6 +41,16 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    Widget mainContent = const Center(
+      child: Text('No expenses found. Start adding some!'),
+    );
+    if (_registeredExpenses.isNotEmpty) {
+      mainContent = ExpensesList(
+        onRemovedExpense: _removeExpense,
+        expenses: _registeredExpenses,
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -57,10 +67,7 @@ class _ExpensesState extends State<Expenses> {
           // expanded to fix the problem of a list(listview) inside another
           // list(column)
           Expanded(
-            child: ExpensesList(
-              onRemovedExpense: _removeExpense,
-              expenses: _registeredExpenses,
-            ),
+            child: mainContent,
           ),
         ],
       ),
