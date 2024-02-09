@@ -28,6 +28,7 @@ class _ExpensesState extends State<Expenses> {
     // second context(ctx) is the context of the own modal bottom sheet
     // so, the two context are different
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       builder: (ctx) => NewExpense(onAddExpense: _addExpense),
     );
