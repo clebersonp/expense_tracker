@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expense_tracker/models/expense.dart';
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense({super.key, required this.onAddExpense});
+
+  final void Function(Expense expense) onAddExpense;
 
   @override
   State<NewExpense> createState() => _NewExpenseState();
@@ -66,6 +68,19 @@ class _NewExpenseState extends State<NewExpense> {
       );
       return;
     }
+
+    // form is valid
+    widget.onAddExpense(
+      Expense(
+        title: _titleController.text.trim(),
+        amount: enteredAmount,
+        date: _selectedDate!,
+        category: _selectedCategory,
+      ),
+    );
+
+    // after created, close the modal(form)
+    Navigator.pop(context);
   }
 
   @override
