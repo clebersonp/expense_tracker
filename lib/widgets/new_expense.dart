@@ -16,6 +16,9 @@ class _NewExpenseState extends State<NewExpense> {
 
   DateTime? _selectedDate;
 
+  // default value
+  var _selectedCategory = Category.food;
+
   // when using textEditingController, need to dispose it to clear the value
   // when the widget will be dispose or not showed
   @override
@@ -77,9 +80,7 @@ class _NewExpenseState extends State<NewExpense> {
                     Column(
                       children: [
                         Text(
-                          _selectedDate == null
-                              ? 'No date selected'
-                              : formatter.format(_selectedDate!),
+                          _selectedDate == null ? 'No date selected' : formatter.format(_selectedDate!),
                         ),
                       ],
                     ),
@@ -94,17 +95,26 @@ class _NewExpenseState extends State<NewExpense> {
           ),
           const SizedBox(height: 30),
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              ElevatedButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel')),
+              DropdownButton(
+                value: _selectedCategory,
+                onChanged: (value) => setState(() => _selectedCategory = value!),
+                items: Category.values
+                    .map((category) => DropdownMenuItem(
+                          value: category,
+                          child: Text(category.name.toUpperCase()),
+                        ))
+                    .toList(),
+              ),
+              const Spacer(),
+              ElevatedButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
               const SizedBox(width: 20),
               ElevatedButton(
                 onPressed: () {
                   print(_titleController.text);
                   print(_amountController.text);
                   print(_selectedDate);
+                  print(_selectedCategory);
                 },
                 child: const Text('Save Expense'),
               ),
