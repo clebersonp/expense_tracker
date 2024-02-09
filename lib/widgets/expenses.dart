@@ -23,8 +23,26 @@ class _ExpensesState extends State<Expenses> {
   }
 
   void _removeExpense(Expense expense) {
+    var index = _registeredExpenses.indexOf(expense);
     print('Removing expense: $expense');
     setState(() => _registeredExpenses.remove(expense));
+    // clear all snackbars before show up the new one
+    ScaffoldMessenger.of(context).clearSnackBars();
+    // show new snackbar with undo action
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 3),
+        content: const Text('Removed Expense!'),
+        action: SnackBarAction(
+          label: 'Undo',
+          // insert the expense into the same list position before
+          onPressed: () => setState(() {
+            print('Undo removed expense: $expense');
+            _registeredExpenses.insert(index, expense);
+          }),
+        ),
+      ),
+    );
   }
 
   void _openAddExpenseOverlay() {
