@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 const uuid = Uuid();
-final formatter = DateFormat.yMd();
+final formatter = DateFormat('MM/dd/yyyy');
 
 enum Category { food, travel, leisure, work, study }
 
@@ -64,5 +64,9 @@ class ExpenseBucket {
     }
 
     return sum;
+  }
+
+  IconData? get categoryIconData {
+    return _categoryIcons[category];
   }
 }
